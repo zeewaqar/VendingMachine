@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Button, Typography, Card, CardContent, CardActions, TextField, CircularProgress, Grid, Container, Box } from '@mui/material';
-import AuthContext from '../../context/authContext'; // Import the useAuth hook
+import AuthContext from '../../context/authContext'; 
 import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
 
@@ -35,7 +35,7 @@ function ProductList() {
     }, [token]);
 
     const handleBuy = async (productId) => {
-        const quantity = quantities[productId] || 1; // Default to 1 if not set
+        const quantity = quantities[productId] || 1; 
 
         try {
             const response = await axios.post('/buy', {
@@ -50,7 +50,7 @@ function ProductList() {
             setProducts(prevProducts => prevProducts.map(product =>
                 product._id === productId ? { ...product, amountAvailable: product.amountAvailable - quantity } : product
             ));
-            setTimeout(() => setPurchaseResponse(null), 10000); // Reset after 10 seconds
+            setTimeout(() => setPurchaseResponse(null), 10000); 
         } catch (err) {
             if (err.response.data.error) {
                 setError(err.response.data.error);
@@ -121,7 +121,6 @@ function ProductList() {
                                     <Typography variant="h6">{product.productName}</Typography>
                                     <Typography color="textSecondary" gutterBottom>Price: {product.cost}</Typography>
                                     <Typography color="textSecondary">Available: {product.amountAvailable}</Typography>
-                                   
                                     <TextField
                                         sx={{ mt: 3}}
                                         label="Quantity"

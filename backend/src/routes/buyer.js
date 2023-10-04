@@ -5,7 +5,6 @@ const authenticate = require('../middlewares/authenticate');
 
 const router = new express.Router();
 
-// POST /deposit
 router.post('/deposit', authenticate, async (req, res) => {
     if (req.user.role !== 'buyer') {
         return res.status(403).send({ error: 'Only buyers can deposit coins.' });
@@ -26,7 +25,6 @@ router.post('/deposit', authenticate, async (req, res) => {
     }
 });
 
-// POST /buy
 
 router.post('/buy', authenticate, async (req, res) => {
     if (req.user.role !== 'buyer') {
@@ -50,7 +48,7 @@ router.post('/buy', authenticate, async (req, res) => {
             return res.status(400).send({ error: 'Product stock is insufficient.' });
         }
 
-        // Calculate change
+       
         let change = req.user.deposit - totalCost;
         const coins = [100, 50, 20, 10, 5];
         const changeArray = [];
@@ -79,13 +77,12 @@ router.post('/buy', authenticate, async (req, res) => {
             remainingDeposit: req.user.deposit
         });
     } catch (e) {
-        console.error(e); // Log the error for debugging
+        console.error(e);
         res.status(500).send();
     }
 });
 
 
-// POST /reset
 router.post('/reset', authenticate, async (req, res) => {
     if (req.user.role !== 'buyer') {
         return res.status(403).send({ error: 'Only buyers can reset their deposit.' });

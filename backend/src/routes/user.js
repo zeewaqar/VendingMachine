@@ -9,7 +9,6 @@ const activeTokens = require('../middlewares/activeTokens');
 router.post('/user', async (req, res) => {
   const user = new User(req.body);
   try {
-    // Hash the password before saving
     await user.save();
 
     const token = jwt.sign({ userId: user._id }, process.env.YOUR_SECRET_KEY);
@@ -63,15 +62,13 @@ router.post('/user/logout/all', authenticate, async (req, res) => {
 });
 
 
-// GET user profile
 router.get('/user/me', authenticate, async (req, res) => {
   res.send(req.user);
 });
 
-// UPDATE user profile
 router.put('/user/me', authenticate, async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ['username', 'password', 'email']; // Add other fields as necessary
+  const allowedUpdates = ['username', 'password', 'email']; 
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
   if (!isValidOperation) {
@@ -87,7 +84,6 @@ router.put('/user/me', authenticate, async (req, res) => {
   }
 });
 
-// DELETE user profile
 router.delete('/user/me', authenticate, async (req, res) => {
   try {
     await req.user.remove();
@@ -97,7 +93,5 @@ router.delete('/user/me', authenticate, async (req, res) => {
   }
 });
 
-
-// Add other CRUD routes for user
 
 module.exports = router;

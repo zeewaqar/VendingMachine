@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Button, Typography, Box, Paper, Grid, CircularProgress, Container } from '@mui/material';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from '../../context/authContext'; // Import the useAuth hook
+import AuthContext from '../../context/authContext';
 import Header from '../Header/Header';
 
 const StyledPaper = styled(Paper)`
@@ -27,17 +27,17 @@ function DepositCoin() {
   const handleCoinClick = async (value) => {
     setLoading(true);
     try {
-       await axios.post('/deposit', { amount: value }, {
+      await axios.post('/deposit', { amount: value }, {
         headers: {
-          'Authorization': `Bearer ${token}` // Send the token in the request header
+          'Authorization': `Bearer ${token}`
         }
       });
       setAmount(prevAmount => prevAmount + value);
       setSuccessMessage(`Successfully deposited ${value} coins!`);
-      setErrorMessage(''); // Clear any previous error messages
+      setErrorMessage('');
     } catch (error) {
       setErrorMessage('Failed to deposit coins. Please try again.');
-      setSuccessMessage(''); // Clear any previous success messages
+      setSuccessMessage('');
     } finally {
       setLoading(false);
     }

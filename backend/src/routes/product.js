@@ -21,67 +21,63 @@ router.post('/product', authenticate, async (req, res) => {
 });
 
 
-// GET all products
 router.get('/products', async (req, res) => {
   try {
-      const products = await Product.find({});
-      res.send(products);
+    const products = await Product.find({});
+    res.send(products);
   } catch (e) {
-      res.status(500).send();
+    res.status(500).send();
   }
 });
 
-// GET a specific product
 router.get('/product/:id', async (req, res) => {
   const _id = req.params.id;
   try {
-      const product = await Product.findById(_id);
-      if (!product) {
-          return res.status(404).send();
-      }
-      res.send(product);
+    const product = await Product.findById(_id);
+    if (!product) {
+      return res.status(404).send();
+    }
+    res.send(product);
   } catch (e) {
-      res.status(500).send();
+    res.status(500).send();
   }
 });
 
-// UPDATE a product
 router.put('/product/:id', authenticate, async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ['productName', 'cost', 'amountAvailable']; // Add other fields as necessary
+  const allowedUpdates = ['productName', 'cost', 'amountAvailable'];
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
   if (!isValidOperation) {
-      return res.status(400).send({ error: 'Invalid updates!' });
+    return res.status(400).send({ error: 'Invalid updates!' });
   }
 
   try {
-      const product = await Product.findOne({ _id: req.params.id, sellerId: req.user._id });
-      if (!product) {
-          return res.status(404).send();
-      }
+    const product = await Product.findOne({ _id: req.params.id, sellerId: req.user._id });
+    if (!product) {
+      return res.status(404).send();
+    }
 
-      updates.forEach((update) => product[update] = req.body[update]);
-      await product.save();
-      res.send(product);
+    updates.forEach((update) => product[update] = req.body[update]);
+    await product.save();
+    res.send(product);
   } catch (e) {
-      res.status(400).send(e);
+    res.status(400).send(e);
   }
 });
 
-// DELETE a product
+
 router.delete('/product/:id', authenticate, async (req, res) => {
   try {
-      const product = await Product.findOneAndDelete({ _id: req.params.id, sellerId: req.user._id });
-      if (!product) {
-          return res.status(404).send();
-      }
-      res.send(product);
+    const product = await Product.findOneAndDelete({ _id: req.params.id, sellerId: req.user._id });
+    if (!product) {
+      return res.status(404).send();
+    }
+    res.send(product);
   } catch (e) {
-      res.status(500).send();
+    res.status(500).send();
   }
 });
 
-// Add other CRUD routes for product
 
 module.exports = router;

@@ -6,7 +6,7 @@ import { Link as RouterLink } from 'react-router-dom';
 function Registration({ onRegister }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('buyer'); // default to 'buyer'
+  const [role, setRole] = useState('buyer');
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -14,7 +14,6 @@ function Registration({ onRegister }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (!username || !password) {
       setError('Both username and password are required.');
       return;
@@ -77,7 +76,7 @@ function Registration({ onRegister }) {
               >
                 Register
               </Button>
-              <Box sx={{ mt: 2, mb:2 }}>
+              <Box sx={{ mt: 2, mb: 2 }}>
                 <Typography variant="body2">
                   Already have an account? <Link component={RouterLink} to="/login" variant="body2">Login</Link>
                 </Typography>
@@ -87,7 +86,7 @@ function Registration({ onRegister }) {
               <InputLabel id="role-label">Role</InputLabel>
               <Select
                 labelId="role-label"
-                id="role" 
+                id="role"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
                 label="Role"

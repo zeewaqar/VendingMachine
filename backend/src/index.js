@@ -9,7 +9,6 @@ const buyerRouter = require('./routes/buyer');
 const app = express();
 const port = process.env.PORT || 3001;
 
-// Connect to MongoDB
 connectDB();
 
 app.use(bodyParser.json());
@@ -20,6 +19,6 @@ app.use(buyerRouter);
 const server = app.listen(port, () => {
   console.log(`Server is up on port ${port}`);
 });
-module.exports = server; // Export the server instance
+module.exports = server; 
 
 

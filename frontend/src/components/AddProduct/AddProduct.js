@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext,useCallback } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import axios from 'axios';
-import {Button, TextField, Typography, Container, Box, List, ListItem, Card, CardContent, IconButton,CircularProgress } from '@mui/material';
+import { Button, TextField, Typography, Container, Box, List, ListItem, Card, CardContent, IconButton, CircularProgress } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import Header from '../Header/Header';
 
@@ -92,7 +92,7 @@ function AddProduct() {
         setProductName(product.productName);
         setProductCost(product.cost);
         setAmountAvailable(product.amountAvailable);
-        setIsEditMode(true); // Set edit mode to true
+        setIsEditMode(true);
     };
 
 
@@ -101,15 +101,15 @@ function AddProduct() {
         setProductName('');
         setProductCost(0);
         setAmountAvailable(0);
-        setIsEditMode(false); // Set edit mode to false
+        setIsEditMode(false);
     };
 
     return (
         <Container component="main" maxWidth="md">
             <Header />
             <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                {loading && <CircularProgress sx={{ mb: 2 }} />} {/* Display loading spinner */}
-                {error && <Typography color="error" sx={{ mb: 2 }}>{error}</Typography>} {/* Display error message */}
+                {loading && <CircularProgress sx={{ mb: 2 }} />}
+                {error && <Typography color="error" sx={{ mb: 2 }}>{error}</Typography>}
 
                 <Typography variant="h5" gutterBottom>{isEditMode ? 'Update Product' : 'Add New Product'}</Typography>
                 <Card variant="outlined" sx={{ mt: 3, width: '100%' }}>

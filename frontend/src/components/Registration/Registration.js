@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Button, TextField, Typography, CircularProgress, Container, Box, Link, Card, CardContent, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-function Registration({ onRegister }) {
+function Registration() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('buyer');
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,9 +23,12 @@ function Registration({ onRegister }) {
     setLoading(true);
     try {
       const response = await axios.post('/user', { username, password, role });
-      onRegister(response.data.token);
+      if (response) {
+        navigate('/login');
+      } 
     } catch (error) {
-      setError("Registration failed. Please check your input.");
+      setError(error.response.data.error);
+      console.log(error)
     } finally {
       setLoading(false);
     }

@@ -34,6 +34,12 @@ function Login() {
                 setHasActiveSessionToken(error.response.data.token)
                 setHasActiveSessionId(error.response.data.token)
             }
+            if (error.response.data.error === 'Password does not match.') {
+                setError(error.response.data.error);
+            }
+            if (error.response.data.error === 'Username not found.') {
+                setError(error.response.data.error);
+            }
         } finally {
             setLoading(false);
         }
@@ -41,7 +47,7 @@ function Login() {
 
     const handleTerminateAllSessions = async () => {
         try {
-            await axios.post('/user/logout/all', {hasActiveSessionId},{
+            await axios.post('/user/logout/all', { hasActiveSessionId }, {
                 headers: {
                     'Authorization': `Bearer ${hasActiveSessionToken}`
                 }
@@ -108,11 +114,11 @@ function Login() {
                     </CardContent>
                 </Card>
                 {hasActiveSession && (
-                <div>
-                    <p>There is already an active session using your account.</p>
-                    <button onClick={handleTerminateAllSessions}>Terminate All Sessions</button>
-                </div>
-            )}
+                    <div>
+                        <p>There is already an active session using your account.</p>
+                        <button onClick={handleTerminateAllSessions}>Terminate All Sessions</button>
+                    </div>
+                )}
             </Box>
         </Container>
     );

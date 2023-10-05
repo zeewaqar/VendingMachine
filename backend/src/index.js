@@ -7,7 +7,7 @@ const productRouter = require('./routes/product');
 const buyerRouter = require('./routes/buyer');
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
 connectDB();
 

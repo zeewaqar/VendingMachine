@@ -2,14 +2,26 @@ import React, { useContext } from 'react';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import AuthContext from '../../context/authContext';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // <-- Import axios
 
 function Header() {
-    const { logout } = useContext(AuthContext);
+    const { logout, token } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const handleLogout = () => {
-        logout();
-        navigate('/login');
+    const handleLogout = async () => {
+        try {
+            // Call the /user/logout API endpoint
+            await axios.post('/user/logout', {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            logout(); 
+            navigate('/login');
+        } catch (error) {
+            console.error("Error logging out:", error);
+           
+        }
     };
 
     return (

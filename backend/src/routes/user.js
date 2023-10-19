@@ -97,5 +97,24 @@ router.delete('/user/me', authenticate, async (req, res) => {
   }
 });
 
+router.delete('/user/me', authenticate, async (req, res) => {
+  
+  try {
+    if (req.user.role === 'seller') {
+      const products = await Product.find({ sellerId: req.user._id });
+      if (products.length > 0) {
+        return res.status(400).send({ error: 'Cannot delete seller account with active products.' });
+      }
+    }
+
+    await req.user.remove();
+    res.send(req.user);
+  } catch (e) {
+    res.status(500).send();
+  }
+});
+
+
+
 
 module.exports = router;
